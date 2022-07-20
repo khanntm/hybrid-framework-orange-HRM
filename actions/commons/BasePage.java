@@ -19,6 +19,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import pageUIs.BasePageUI;
+
 public class BasePage {
 	
 	public static BasePage getBasePageObject() {
@@ -671,15 +673,33 @@ public class BasePage {
 		return isElementSelected(driver, /*BasePageUI.RADIO_BY_LABEL, */ lableName);
 	}
 	
+	// Define for function click to Menu
+	public void openMenuPage(WebDriver driver, String menuPageName) {
+		waitForElementClickable(driver, BasePageUI.DYNAMIC_MENU_PAGE, menuPageName);
+		clickToElement(driver, BasePageUI.DYNAMIC_MENU_PAGE, menuPageName);
+	}
 	
-	//Video 18 - 60 at 1:58' 
-	/*
-	public String getValueInTableIDAtColumnNameAndRowIndex(WebDriver driver, String tableID, String headerName, String rowIndex) {
-		int columnIndex = getElementSize(driver, BasePageUI.TABLE_HEADER_BY_ID_AND_NAME, tableID, headerName) +1;
-		waitForElementVisible(driver, BasePageUI.TABLE_ROW_BY_COLUMN_INDEX_AND_ROW_INDEX, tableID, rowIndex, String.valueOf(columnIndex));
-		return getElementText(driver, BasePageUI.TABLE_ROW_BY_COLUMN_INDEX_AND_ROW_INDEX, tableID, rowIndex, String.valueOf(columnIndex));
+	// Define for function click to SubMenu
+	public void openSubMenuPage(WebDriver driver, String menuPageName, String subMenuPageName) {
+		waitForElementClickable(driver, BasePageUI.DYNAMIC_MENU_PAGE, menuPageName);
+		clickToElement(driver, BasePageUI.DYNAMIC_MENU_PAGE, menuPageName);
 		
-	} */
+		waitForElementClickable(driver, BasePageUI.DYNAMIC_MENU_PAGE, subMenuPageName);
+		clickToElement(driver, BasePageUI.DYNAMIC_MENU_PAGE, subMenuPageName);
+	}
+	
+	// Define for function click to ChildSubMenu
+	public void openChildSubMenuPage(WebDriver driver, String menuPageName, String subMenuPageName, String childSubMenuPageName) {
+		waitForElementClickable(driver, BasePageUI.DYNAMIC_MENU_PAGE, menuPageName);
+		clickToElement(driver, BasePageUI.DYNAMIC_MENU_PAGE, menuPageName);
+		
+		waitForElementVisible(driver, BasePageUI.DYNAMIC_MENU_PAGE, subMenuPageName);
+		hoverMouseToElement(driver, BasePageUI.DYNAMIC_MENU_PAGE, subMenuPageName);
+		
+		waitForElementClickable(driver, BasePageUI.DYNAMIC_MENU_PAGE, childSubMenuPageName);
+	    clickToElement(driver, BasePageUI.DYNAMIC_MENU_PAGE, childSubMenuPageName);
+	}
+	
 	
 	/*
 	public LoginPO logoutToSystem(WebDriver driver) {
