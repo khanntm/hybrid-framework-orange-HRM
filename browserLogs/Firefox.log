@@ -1,0 +1,6 @@
+1656916443498	geckodriver	INFO	Listening on 127.0.0.1:12934
+1656916443899	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-no-remote" "-profile" "C:\\Users\\H\\AppData\\Local\\Temp\\rust_mozprofile4uDmJi"
+1656916445627	Marionette	INFO	Marionette enabled
+JavaScript error: chrome://browser/content/tabbrowser.js, line 5318: TypeError: this.PictureInPicture is undefined
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\H\\AppData\\Local\\Temp\\rust_mozprofile4uDmJi\\search.json.mozlz4", (void 0)))
+JavaScript error: resource:///modules/CustomizableUI.jsm, line 4103: Error: Area not yet restored
