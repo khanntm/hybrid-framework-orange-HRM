@@ -3,13 +3,20 @@
 
 <parameter name= "envName" value="local" />
 <parameter name= "serverName" value="dev" />
- 
+
+<listeners>
+<listener class-name="commons.MethodListener" />
+<listener class-name="reportConfig.ReportNGListener" />  
+<!--	<listener class-name="reportConfig.ExtentTestListener" /> -->
+<listener class-name="org.uncommons.reportng.HTMLReporter" />
+<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+</listeners>
 
   <test name="Run on CHROME">
   	<parameter name="browser" value="CHROME" > </parameter>
     <classes>
     <!--  Trigger Common 01 run first -->
-         <class name="com.hrm.employee.User_01_Register_Login"/>
+         <class name="com.hrm.employee.Registration_And_Login"/>
        </classes>
   </test>
 </suite> 

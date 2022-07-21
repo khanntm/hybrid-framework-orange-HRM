@@ -27,8 +27,6 @@ public class ChromeDriverManage implements BrowserFactory{
 		 chromePrefs.put("download.default_directory", GlobalConstants.getGlobalConstants().getDownloadFile());
 		 options.setExperimentalOption("prefs", chromePrefs);
 		 
-		 //options.AddArguments("--incognito");
-		 
 		 System.setProperty("webdriver.chrome.args", "--disable-logging");
 		 System.setProperty("webdriver.chrome.silentOutput", "true");
 		 

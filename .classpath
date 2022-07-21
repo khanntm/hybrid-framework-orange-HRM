@@ -10,7 +10,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libraries/client-combined-3.141.59-sources.jar"/>
-	<classpathentry kind="lib" path="libraries/selenium-server-standalone-3.141.59.jar"/>
+	<classpathentry kind="lib" path="libraries/selenium-server-standalone-3.141.59.jar" sourcepath="libraries/client-combined-3.141.59-sources.jar"/>
 	<classpathentry kind="lib" path="libraries/testng-6.14.3.jar"/>
 	<classpathentry kind="lib" path="libraries/testng-6.14.3-sources.jar"/>
 	<classpathentry kind="lib" path="libraries/lombok-1.18.22.jar"/>
@@ -56,5 +56,9 @@
 	<classpathentry kind="lib" path="libFaker/generex-1.0.2.jar"/>
 	<classpathentry kind="lib" path="libFaker/javafaker-1.0.1.jar"/>
 	<classpathentry kind="lib" path="libFaker/snakeyaml-1.23.jar"/>
+	<classpathentry kind="lib" path="libReportNG/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="libReportNG/guice-3.0.jar"/>
+	<classpathentry kind="lib" path="libReportNG/reportng-1.1.4.jar"/>
+	<classpathentry kind="lib" path="libReportNG/velocity-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

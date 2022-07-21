@@ -11,13 +11,8 @@ public class EmployeeListPageObject extends BasePage {
 		this.driver = driver;
 	}
 
-	public void enterToEmployeeNameTextbox(String string) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	public boolean isEmployeeInfoDisplayedAtResultTable(String string, String string2, String string3) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
+	
+
 }

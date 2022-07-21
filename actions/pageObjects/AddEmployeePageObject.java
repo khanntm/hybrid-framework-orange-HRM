@@ -11,19 +11,4 @@ public class AddEmployeePageObject extends BasePage {
 		this.driver = driver;
 	}
 
-	public String getEmployeeID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void clickToCreateLoginDetailCheckbox() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void selectValueInStatusDropdown(String statusValue) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

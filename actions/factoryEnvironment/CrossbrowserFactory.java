@@ -25,8 +25,6 @@ public class CrossbrowserFactory {
 		capability.setCapability("browserName", browserName);
 		capability.setCapability("record_video", "true");
 		
-		//Map<String, Object> sauceOptions = new HashMap<>();
-		
 		if(osName.contains("Windows")) {
 			capability.setCapability("screenResolution", "1920x1080"); 
 		} else {

@@ -34,9 +34,6 @@ import factoryEnvironment.SaucelabFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseTest {
-	//private WebDriver driver; -> When parallel creating many threads 
-	//private static WebDriver driver; // Static to avoid define many times, but parallel is failed due to driver using together or null
-	//ThreadLocal can resolve 2 above ways
 	private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>(); 
 	protected final Log log;
 	private String projectPath = System.getProperty("user.dir");
@@ -80,7 +77,6 @@ public class BaseTest {
 		driver.get().manage().timeouts().implicitlyWait(GlobalConstants.getGlobalConstants().getShortTimeout(), TimeUnit.SECONDS);
 		driver.get().manage().window().maximize();
 		driver.get().get(getEnvironmentUrl(serverName));
-		//driver.get.(getEnvironmentUrl(serverName));
 		return driver.get();
 	}
 	
@@ -115,7 +111,6 @@ public class BaseTest {
 		} catch (Throwable e) {
 			pass = false;
 
-			// Add to ReportNG
 			VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
 			Reporter.getCurrentTestResult().setThrowable(e);
 		}
