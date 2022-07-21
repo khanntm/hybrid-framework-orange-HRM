@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 
 import commons.BasePage;
 import commons.BaseTest;
+import commons.GlobalConstants;
 import pageObjects.AddEmployeePageObject;
 import pageObjects.DashboardPageObject;
 import pageObjects.EmployeeListPageObject;
@@ -30,6 +31,9 @@ public class Registration_And_Login extends BaseTest{
 	String empFirstName, empLastName, empUserName, empPassword, empFullName;
 	String adminUserName, adminPassword;
 	
+	String uploadFilesPath = GlobalConstants.getGlobalConstants().getUploadFile();
+	String avatarFilePath = uploadFilesPath + "Avatar.jpg";
+	
 	@Parameters({"envName","serverName","browser", "ipAddress", "portNumber", "osName", "osVersion"})
 	 @BeforeClass 
 	  public void beforeClass(@Optional("local") String envName, @Optional("dev") String serverName, @Optional("chrome") String browserName, @Optional("localhost") String ipAddress, @Optional("4444") String portNumber, @Optional("Windows") String osName, @Optional("10")String osVersion) {
@@ -50,10 +54,7 @@ public class Registration_And_Login extends BaseTest{
 		empFullName = empFirstName +" "+ empLastName;
 		
 		log.info("Pre-Condition - Step 01: Login with Admin role");
-		loginPage.enterToTextboxByID(driver, "txtUsername", adminUserName);
-		loginPage.enterToTextboxByID(driver, "txtPassword", adminPassword);
-		loginPage.clickToButtonByID(driver, "btnLogin");
-		dashboardPage = pageGenerator.getDashboardPage(driver);
+		dashboardPage = loginPage.loginToSystem(driver, adminUserName, adminPassword);
 	 }
 
  @Test
@@ -119,7 +120,30 @@ public class Registration_And_Login extends BaseTest{
  
  @Test
  public void Employee_02_Upload_Avatar() {
+	 log.info("Upload_Avatar_02 - Step 01: Logout to system");
+	 loginPage = employeeListPage.logoutToSystem(driver);
 	 
+	 log.info("Upload_Avatar_02 - Step 02: Login with employee role '"+ empUserName + "' ");
+	 dashboardPage = loginPage.loginToSystem(driver, empUserName, empPassword);
+	 
+	 log.info("Upload_Avatar_02 - Step 03: Open 'Personal Details' page");
+	 dashboardPage.openMenuPage(driver, "My Info");
+	 personalDetailPage = pageGenerator.getPersonalDetailPage(driver);
+	 
+	 log.info("Upload_Avatar_02 - Step 04: Click on change photo image");
+	 personalDetailPage.clickToChangePhotoImage();
+	 
+	 log.info("Upload_Avatar_02 - Step 05: Upload new avatar image");
+	 personalDetailPage.uploadImage(driver, avatarFilePath);
+	 
+	 log.info("Upload_Avatar_02 - Step 06: Click to 'Upload' button");
+	 personalDetailPage.clickToButtonByID(driver, "btnSave");
+	 
+	 log.info("Upload_Avatar_02 - Step 07: Verify success message is displayed");
+	 verifyTrue(personalDetailPage.isUploadAvatarSuccessMessageDisplayed());
+	 
+	 log.info("Upload_Avatar_02 - Step 08: Verify new Avatar image is displayed");
+	 verifyTrue(personalDetailPage.isNewAvatarImageDisplayed());
  }
  
  @Test
@@ -174,8 +198,8 @@ public class Registration_And_Login extends BaseTest{
  
   @AfterClass(alwaysRun = true)
  	public void afterClass() {
- 	  //closeBrowserAndDriver("local");
- 	}
+ 	  closeBrowserAndDriver("local");
+ 	} 
   
   	WebDriver driver;
   	AddEmployeePageObject addEmployeePage;

@@ -19,6 +19,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import pageObjects.DashboardPageObject;
+import pageObjects.LoginPageObject;
+import pageObjects.pageGenerator;
 import pageUIs.BasePageUI;
 
 public class BasePage {
@@ -542,26 +545,12 @@ public class BasePage {
 	}
 	
 	public void waitForElementClickable(WebDriver driver, String locatorType, String... dynamicValues) {
-		System.out.println("Driver at wait for element  = " + driver.toString());
 		WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
 		explicitWait.until(ExpectedConditions.elementToBeClickable(getByLocator(getDynamicXpath(locatorType, dynamicValues))));
 	}
 	
-	public void uploadMultipleFiles(WebDriver driver, String... fileNames) {
-		 
-		String filePath = GlobalConstants.getGlobalConstants().getUploadFile();
-	 
-		String fullFileName ="";
-		for(String file : fileNames) {
-			fullFileName = fullFileName + filePath + file + "\n";
-		}
-		fullFileName = fullFileName.trim();
-		//getWebElement(driver, BasePageJQueryUI.UPLOAD_FILE_TYPE).sendKeys(fullFileName);
-	}
-	
-	public void uploadImage(WebDriver driver, String filePath) {
-		 
-		//getWebElement(driver, BasePageUI.UPLOAD_FILE).sendKeys(filePath);
+	public void uploadImage(WebDriver driver, String filePath) {	 
+		getWebElement(driver, BasePageUI.UPLOAD_FILE).sendKeys(filePath);
 	}
 	
 	/**
@@ -681,6 +670,26 @@ public class BasePage {
 		int columnIndex = getElementSize(driver, BasePageUI.TABLE_HEADER_BY_ID_AND_NAME, tableID, headerName) + 1;
 		waitForElementVisible(driver, BasePageUI.TABLE_ROW_BY_COLUMN_AND_ROW_INDEX, tableID, rowIndex, String.valueOf(columnIndex));
 		return getElementText(driver, BasePageUI.TABLE_ROW_BY_COLUMN_AND_ROW_INDEX, tableID, rowIndex, String.valueOf(columnIndex));
+	}
+	
+	public DashboardPageObject loginToSystem(WebDriver driver, String userName, String password) {
+		waitForElementVisible(driver, BasePageUI.USER_LOGIN_TEXTBOX);
+		sendkeyToElement(driver, BasePageUI.USER_LOGIN_TEXTBOX, userName);
+		sendkeyToElement(driver, BasePageUI.PASSWORD_LOGIN_TEXTBOX, password);
+		clickToElement(driver, BasePageUI.LOGIN_BUTTON);
+		return pageGenerator.getDashboardPage(driver);
+		
+	}
+	
+	public LoginPageObject logoutToSystem(WebDriver driver) {
+		waitForElementClickable(driver, BasePageUI.WELCOME_USER_LINK);
+		clickToElement(driver, BasePageUI.WELCOME_USER_LINK);
+		
+		waitForElementClickable(driver, BasePageUI.LOGOUT_LINK);
+		clickToElement(driver, BasePageUI.LOGOUT_LINK);
+		
+		return pageGenerator.getLoginPage(driver);
+		
 	}
 	
 	private long longTimeout = GlobalConstants.getGlobalConstants().getLongTimeout();

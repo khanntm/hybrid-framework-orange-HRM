@@ -12,8 +12,8 @@
 <listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
 </listeners>
 
-  <test name="Run on CHROME">
-  	<parameter name="browser" value="CHROME" > </parameter>
+  <test name="Run on FIREFOX">
+  	<parameter name="browser" value="firefox" > </parameter>
     <classes>
     <!--  Trigger Common 01 run first -->
          <class name="com.hrm.employee.Registration_And_Login"/>

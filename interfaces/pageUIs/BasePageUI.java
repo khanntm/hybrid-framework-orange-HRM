@@ -10,4 +10,11 @@ public class BasePageUI {
 	public static final String TABLE_HEADER_BY_ID_AND_NAME = "xpath=//table[@id='%s']//th[string()='%s']/preceding-sibling::th";
 	public static final String TABLE_ROW_BY_COLUMN_AND_ROW_INDEX = "xpath=//table[@id='%s']/tbody/tr[%s]/td[%s]";
 	
+	public static final String WELCOME_USER_LINK = "xpath=//a[@id='welcome']";
+	public static final String LOGOUT_LINK = "xpath=//div[@id='welcome-menu']//a[text()='Logout']";
+	public static final String USER_LOGIN_TEXTBOX = "xpath=//input[@id='txtUsername']";
+	public static final String PASSWORD_LOGIN_TEXTBOX = "xpath=//input[@id='txtPassword']";
+	public static final String LOGIN_BUTTON = "xpath=//input[@id='btnLogin']";
+	public static final String UPLOAD_FILE = "xpath=//input[@type='file']";
+	
 }
