@@ -47,7 +47,7 @@ public class Registration_And_Login extends BaseTest{
 		empLastName = fakeData.getLastName();
 		empUserName = fakeData.getUserName();
 		empPassword = "12345678";
-		empFullName = empFirstName +""+ empLastName;
+		empFullName = empFirstName +" "+ empLastName;
 		
 		log.info("Pre-Condition - Step 01: Login with Admin role");
 		loginPage.enterToTextboxByID(driver, "txtUsername", adminUserName);
@@ -73,10 +73,10 @@ public class Registration_And_Login extends BaseTest{
 	 addEmployeePage.enterToTextboxByID(driver, "lastName", empLastName);
 	 
 	 log.info("Add_New_01 - Step 05: Get value of 'Employee ID'");
-	 employeeID = addEmployeePage.getEmployeeID();
-
+	 employeeID = addEmployeePage.getTextboxValueByID(driver, "employeeId");
+	 
 	 log.info("Add_New_01 - Step 06: Click to 'Create Login Details' checkbox");
-	 addEmployeePage.clickToCreateLoginDetailCheckbox();
+	 addEmployeePage.clickToCheckboxByLable(driver, "Create Login Details"); 
 	 
 	 log.info("Add_New_01 - Step 07: Enter valid info to 'User Name' textbox");
 	 addEmployeePage.enterToTextboxByID(driver, "user_name", empUserName);
@@ -88,7 +88,7 @@ public class Registration_And_Login extends BaseTest{
 	 addEmployeePage.enterToTextboxByID(driver, "re_password", empPassword);
 	 
 	 log.info("Add_New_01 - Step 10: Select '"+ statusValue +"' value in 'Status' dropdown");
-	 addEmployeePage.selectValueInStatusDropdown(statusValue);
+	 addEmployeePage.selectItemInDropDownByID(driver, "status", statusValue);
 
 	 log.info("Add_New_01 - Step 11: Click to 'Save' button");
 	 addEmployeePage.clickToButtonByID(driver, "btnSave");
@@ -98,15 +98,23 @@ public class Registration_And_Login extends BaseTest{
 	 personalDetailPage.openSubMenuPage(driver, "PIM", "Employee List");
 	 employeeListPage = pageGenerator.getEmployeeListPage(driver);
 	 
+	 //employeeListPage.sleepInSecond(10);
+	 verifyTrue(employeeListPage.isJQueryAjaxLoadedSuccess(driver));
 	 log.info("Add_New_01 - Step 13: Enter valid info to 'Employee Name' textbox");
 	 employeeListPage.enterToTextboxByID(driver, "empsearch_employee_name_empName", empFullName);
-
+	 verifyTrue(employeeListPage.isJQueryAjaxLoadedSuccess(driver));	 
+	 //employeeListPage.sleepInSecond(10);
+	 
 	 log.info("Add_New_01 - Step 14: Click to 'Search' button");
 	 employeeListPage.clickToButtonByID(driver, "searchBtn");
+	 verifyTrue(employeeListPage.isJQueryAjaxLoadedSuccess(driver));	 
+	 //employeeListPage.sleepInSecond(10);
 
 	 log.info("Add_New_01 - Step 15: Verify Employee Information displayed at 'Result Table'");
-	 verifyTrue(employeeListPage.isEmployeeInfoDisplayedAtResultTable("","",""));
-	 
+	  
+	 verifyEquals(employeeListPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "resultTable", "Id", "1"), employeeID);
+	 verifyEquals(employeeListPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "resultTable", "First (& Middle) Name", "1"), empFirstName);
+	 verifyEquals(employeeListPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "resultTable", "Last Name", "1"), empLastName);
   }
  
  @Test
@@ -166,7 +174,7 @@ public class Registration_And_Login extends BaseTest{
  
   @AfterClass(alwaysRun = true)
  	public void afterClass() {
- 	  closeBrowserAndDriver("local");
+ 	  //closeBrowserAndDriver("local");
  	}
   
   	WebDriver driver;
