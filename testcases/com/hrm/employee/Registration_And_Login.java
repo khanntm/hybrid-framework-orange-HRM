@@ -10,6 +10,7 @@ import pageObjects.EmployeeListPageObject;
 import pageObjects.LoginPageObject;
 import pageObjects.PersonalDetailPageObject;
 import pageObjects.pageGenerator;
+import utilities.DataUlti;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
@@ -26,7 +27,8 @@ import org.testng.annotations.AfterClass;
 
 public class Registration_And_Login extends BaseTest{
 	String employeeID, statusValue;
-	
+	String empFirstName, empLastName, empUserName, empPassword, empFullName;
+	String adminUserName, adminPassword;
 	
 	@Parameters({"envName","serverName","browser", "ipAddress", "portNumber", "osName", "osVersion"})
 	 @BeforeClass 
@@ -35,11 +37,23 @@ public class Registration_And_Login extends BaseTest{
 		driver = getBrowserDriver(envName, serverName, browserName, ipAddress, portNumber, osName, osVersion); 
 		driver.manage().window().maximize();
 		loginPage = pageGenerator.getLoginPage(driver);
+		fakeData = DataUlti.getData();
+		
+		adminUserName = "Admin";
+		adminPassword = "admin123";
 		
 		statusValue = "Enabled";
+		empFirstName = fakeData.getFirstName();
+		empLastName = fakeData.getLastName();
+		empUserName = fakeData.getUserName();
+		empPassword = "12345678";
+		empFullName = empFirstName +""+ empLastName;
 		
 		log.info("Pre-Condition - Step 01: Login with Admin role");
-		dashboardPage = loginPage.loginToSystem("Admin","admin123");
+		loginPage.enterToTextboxByID(driver, "txtUsername", adminUserName);
+		loginPage.enterToTextboxByID(driver, "txtPassword", adminPassword);
+		loginPage.clickToButtonByID(driver, "btnLogin");
+		dashboardPage = pageGenerator.getDashboardPage(driver);
 	 }
 
  @Test
@@ -49,13 +63,14 @@ public class Registration_And_Login extends BaseTest{
 	 employeeListPage = pageGenerator.getEmployeeListPage(driver);
 	 
 	 log.info("Add_New_01 - Step 02: Click to 'Add' button");
-	 addEmployeePage = employeeListPage.clickToAddButton();
+	 employeeListPage.clickToButtonByID(driver, "btnAdd");
+	 addEmployeePage = pageGenerator.getAddEmployeePage(driver);
 	 
 	 log.info("Add_New_01 - Step 03: Enter valid info to 'First Name' textbox");
-	 addEmployeePage.enterToFirstNameTextbox("");
+	 addEmployeePage.enterToTextboxByID(driver, "firstName", empFirstName);
 	 
 	 log.info("Add_New_01 - Step 04: Enter valid info to 'Last Name' textbox");
-	 addEmployeePage.enterToLastNameTextbox("");
+	 addEmployeePage.enterToTextboxByID(driver, "lastName", empLastName);
 	 
 	 log.info("Add_New_01 - Step 05: Get value of 'Employee ID'");
 	 employeeID = addEmployeePage.getEmployeeID();
@@ -64,29 +79,30 @@ public class Registration_And_Login extends BaseTest{
 	 addEmployeePage.clickToCreateLoginDetailCheckbox();
 	 
 	 log.info("Add_New_01 - Step 07: Enter valid info to 'User Name' textbox");
-	 addEmployeePage.enterToUserNameTextbox();
+	 addEmployeePage.enterToTextboxByID(driver, "user_name", empUserName);
 
 	 log.info("Add_New_01 - Step 08: Enter valid info to 'Password' textbox");
-	 addEmployeePage.enterToPasswordTextbox();
+	 addEmployeePage.enterToTextboxByID(driver, "user_password", empPassword);
 	 
 	 log.info("Add_New_01 - Step 09: Enter valid info to 'Confirm Password' textbox");
-	 addEmployeePage.enterToConfirmPasswordTextbox();
+	 addEmployeePage.enterToTextboxByID(driver, "re_password", empPassword);
 	 
 	 log.info("Add_New_01 - Step 10: Select '"+ statusValue +"' value in 'Status' dropdown");
 	 addEmployeePage.selectValueInStatusDropdown(statusValue);
 
 	 log.info("Add_New_01 - Step 11: Click to 'Save' button");
-	 personalDetailPage = addEmployeePage.clickToSaveButton();
+	 addEmployeePage.clickToButtonByID(driver, "btnSave");
+	 personalDetailPage = pageGenerator.getPersonalDetailPage(driver);
 	 
 	 log.info("Add_New_01 - Step 12: Open Employee List page");
 	 personalDetailPage.openSubMenuPage(driver, "PIM", "Employee List");
 	 employeeListPage = pageGenerator.getEmployeeListPage(driver);
 	 
 	 log.info("Add_New_01 - Step 13: Enter valid info to 'Employee Name' textbox");
-	 employeeListPage.enterToEmployeeNameTextbox("");
+	 employeeListPage.enterToTextboxByID(driver, "empsearch_employee_name_empName", empFullName);
 
 	 log.info("Add_New_01 - Step 14: Click to 'Search' button");
-	 employeeListPage.clickToSearchButton();
+	 employeeListPage.clickToButtonByID(driver, "searchBtn");
 
 	 log.info("Add_New_01 - Step 15: Verify Employee Information displayed at 'Result Table'");
 	 verifyTrue(employeeListPage.isEmployeeInfoDisplayedAtResultTable("","",""));
@@ -159,5 +175,5 @@ public class Registration_And_Login extends BaseTest{
 	EmployeeListPageObject employeeListPage;
 	LoginPageObject loginPage;
 	PersonalDetailPageObject personalDetailPage;
-	
+	DataUlti fakeData;
 }

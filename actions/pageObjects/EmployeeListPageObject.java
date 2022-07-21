@@ -11,17 +11,7 @@ public class EmployeeListPageObject extends BasePage {
 		this.driver = driver;
 	}
 
-	public AddEmployeePageObject clickToAddButton() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public void enterToEmployeeNameTextbox(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void clickToSearchButton() {
 		// TODO Auto-generated method stub
 		
 	}
