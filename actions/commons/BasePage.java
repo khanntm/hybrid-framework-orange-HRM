@@ -23,6 +23,7 @@ import pageObjects.DashboardPageObject;
 import pageObjects.LoginPageObject;
 import pageObjects.pageGenerator;
 import pageUIs.BasePageUI;
+import pageUIs.MyInfoPageUI;
 
 public class BasePage {
 	
@@ -640,7 +641,7 @@ public class BasePage {
 	 * @author Khan Nguyen
 	 */
 	public String getSelectedValueInDropDownByID(WebDriver driver, String dropDownID) {
-		waitForElementClickable(driver, BasePageUI.DROPWDOWN_BY_ID, dropDownID);
+		waitForElementVisible(driver, BasePageUI.DROPWDOWN_BY_ID, dropDownID);
 		return getSelectedItemDefaultDropdown(driver, BasePageUI.DROPWDOWN_BY_ID ,dropDownID);	
 	}
 	
@@ -691,6 +692,29 @@ public class BasePage {
 		return pageGenerator.getLoginPage(driver);
 		
 	}
+	
+	public boolean isSuccessMessageDisplayed(WebDriver driver, String messageValue) {
+		waitForElementVisible(driver, BasePageUI.SUCCESS_MESSAGE_VALUE);
+		return isElementDisplayed(driver, BasePageUI.SUCCESS_MESSAGE_VALUE, messageValue);
+		
+	}
+	
+	public boolean isFieldEnabledByName(WebDriver driver, String fieldID) {
+		waitForElementVisible(driver, BasePageUI.ANY_FIELD_BY_ID, fieldID);
+		return isElementEnabled(driver, BasePageUI.ANY_FIELD_BY_ID, fieldID);
+	}
+	
+	public boolean isRadioButtonSelectedByLabel(WebDriver driver, String labelName) {
+		waitForElementVisible(driver, BasePageUI.RADIO_BY_LABEL, labelName);
+		return isElementSelected(driver, BasePageUI.RADIO_BY_LABEL, labelName);
+	}
+	
+	public boolean isCheckboxSelectedByLabel(WebDriver driver, String labelName) {
+		waitForElementVisible(driver, BasePageUI.CHECKBOX_BY_LABEL, labelName);
+		return isElementSelected(driver, BasePageUI.CHECKBOX_BY_LABEL, labelName);
+	}
+	
+	
 	
 	private long longTimeout = GlobalConstants.getGlobalConstants().getLongTimeout();
 	private long shortTimeout = GlobalConstants.getGlobalConstants().getShortTimeout();

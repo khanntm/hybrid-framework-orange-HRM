@@ -47,8 +47,8 @@ public class GlobalConstants {
 	
 	private final String autoITScript = projectPath + File.separator + "autoIT";
 	
-	private final long shortTimeout = 20;
-	private final long longTimeout = 50;
+	private final long shortTimeout = 5;
+	private final long longTimeout = 10;
 	private final long retryTestFail = 3;
 	
 	//For Browserstack config
