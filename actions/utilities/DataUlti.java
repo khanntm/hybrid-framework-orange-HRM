@@ -54,5 +54,23 @@ public class DataUlti {
 		return faker.finance().creditCard();
 	}
 
+	public String getAddress() {
+		return faker.address().fullAddress();
+	}
 	
+	public String getCity() {
+		return faker.address().cityName();
+	}
+	
+	public String getZipCode() {
+		return faker.address().zipCode();
+	}
+	public String getPhoneNumber() {
+		return faker.phoneNumber().cellPhone();
+	}
+	
+	
+	
+
 }
+

@@ -17,6 +17,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+import static org.testng.Assert.assertFalse;
+
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -29,6 +31,7 @@ import org.testng.annotations.AfterClass;
 public class Registration_And_Login extends BaseTest{
 	String employeeID, statusValue;
 	String empFirstName, empLastName, empUserName, empPassword, empFullName, editEmpFirstName, editEmpLastName;
+	String empContactAddressStreet1, empContactAddressStreet2, empContactCity, empContactProvince, empContactZipCode, empContactCountry, empContactHomeTelephone, empContactMobile, empContactWorkPhone, empContactWorkEmail, empContactOtherEmail;
 	String adminUserName, adminPassword;
 	
 	String uploadFilesPath = GlobalConstants.getGlobalConstants().getUploadFile();
@@ -55,6 +58,18 @@ public class Registration_And_Login extends BaseTest{
 		
 		editEmpFirstName = fakeData.getEditFirstName();
 		editEmpLastName = fakeData.getEditLastName();
+		
+		empContactAddressStreet1 = fakeData.getAddress();
+		empContactAddressStreet2 = fakeData.getAddress();
+		empContactCity = fakeData.getCity();
+		empContactProvince = fakeData.getAddress();
+		empContactZipCode = fakeData.getZipCode();
+		empContactCountry = "Chile";
+		empContactHomeTelephone = "8676767665";
+		empContactMobile = "3457687888";
+		empContactWorkPhone = "983485848";
+		empContactWorkEmail = fakeData.getEmailAddress();
+		empContactOtherEmail = fakeData.getEmailAddress();
 		
 		log.info("Pre-Condition - Step 01: Login with Admin role");
 		dashboardPage = loginPage.loginToSystem(driver, adminUserName, adminPassword);
@@ -217,6 +232,76 @@ public class Registration_And_Login extends BaseTest{
  
  @Test
  public void Employee_04_Contact_Details() {
+	 log.info("Contact_Details_04 - Step 01: Open 'Contact Details' at side bar tab");
+	 myInfoPage.openTabAtSideBarByName("Contact Details");
+	 
+	 log.info("Contact_Details_04 - Step 02: Verify all fields are disabled");
+	 verifyFalse(myInfoPage.isFieldEnabledByName(driver, "contact_street1"));
+	 verifyFalse(myInfoPage.isFieldEnabledByName(driver, "contact_street2"));
+	 verifyFalse(myInfoPage.isFieldEnabledByName(driver, "contact_city"));
+	 verifyFalse(myInfoPage.isFieldEnabledByName(driver, "contact_province"));
+	 verifyFalse(myInfoPage.isFieldEnabledByName(driver, "contact_emp_zipcode"));
+	 verifyFalse(myInfoPage.isFieldEnabledByName(driver, "contact_country"));
+	 verifyFalse(myInfoPage.isFieldEnabledByName(driver, "contact_emp_hm_telephone"));
+	 verifyFalse(myInfoPage.isFieldEnabledByName(driver, "contact_emp_mobile"));
+	 verifyFalse(myInfoPage.isFieldEnabledByName(driver, "contact_emp_work_telephone"));
+	 verifyFalse(myInfoPage.isFieldEnabledByName(driver, "contact_emp_work_email"));
+	 verifyFalse(myInfoPage.isFieldEnabledByName(driver, "contact_emp_oth_email"));
+	 
+	 log.info("Contact_Details_04 - Step 03: Click on 'Edit' button at 'Contact Details' form");
+	 myInfoPage.clickToButtonByID(driver, "btnSave");
+	 
+	 log.info("Contact_Details_04 - Step 04: Enter valid value into 'Address Street 1' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "contact_street1", empContactAddressStreet1);
+	 
+	 log.info("Contact_Details_04 - Step 05: Enter valid value into 'Address Street 2' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "contact_street2", empContactAddressStreet2);
+	 
+	 log.info("Contact_Details_04 - Step 06: Enter valid value into 'City' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "contact_city", empContactCity);
+	 
+	 log.info("Contact_Details_04 - Step 07: Enter valid value into 'State/Province' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "contact_province", empContactProvince);
+	 
+	 log.info("Contact_Details_04 - Step 08: Enter valid value into 'Zip/Postal Code' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "contact_emp_zipcode", empContactZipCode);
+	 
+	 log.info("Contact_Details_04 - Step 09: Select 'Country' value");
+	 myInfoPage.selectItemInDropDownByID(driver, "contact_country", empContactCountry);
+	 
+	 log.info("Contact_Details_04 - Step 10: Enter valid value into 'Home Telephone' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "contact_emp_hm_telephone", empContactHomeTelephone);
+	 
+	 log.info("Contact_Details_04 - Step 12: Enter valid value into 'Mobile' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "contact_emp_mobile", empContactMobile);
+	 
+	 log.info("Contact_Details_04 - Step 13: Enter valid value into 'Work Telephone' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "contact_emp_work_telephone", empContactWorkPhone);
+	 
+	 log.info("Contact_Details_04 - Step 14: Enter valid value into 'Work Email' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "contact_emp_work_email", empContactWorkEmail);
+	 
+	 log.info("Contact_Details_04 - Step 15: Enter valid value into 'Other Email' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "contact_emp_oth_email", empContactOtherEmail);
+	 
+	 log.info("Contact_Details_04 - Step 15: Click to 'Save' button at 'Contact Details' form");
+	 myInfoPage.clickToButtonByID(driver, "btnSave");
+	 
+	 log.info("Contact_Details_04 - Step 16: Verify success message after saving 'Contact Details' form");
+	 verifyTrue(myInfoPage.isSuccessMessageDisplayed(driver, "Successfully Saved"));
+	 
+	 log.info("Contact_Details_04 - Step 17: Verify all fields saving successfully");
+	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_street1"),empContactAddressStreet1);
+	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_street2"),empContactAddressStreet2);
+	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_city"),empContactCity);
+	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_province"),empContactProvince);
+	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_emp_zipcode"),empContactZipCode);
+	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_country"),empContactCountry);
+	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_emp_hm_telephone"),empContactHomeTelephone);
+	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_emp_mobile"),empContactMobile);
+	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_emp_work_telephone"),empContactWorkPhone);
+	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_emp_work_email"),empContactWorkEmail);
+	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_emp_oth_email"),empContactOtherEmail);
 	 
  }
  
@@ -260,10 +345,10 @@ public class Registration_And_Login extends BaseTest{
   }
  
  
-  @AfterClass(alwaysRun = true)
+  /* @AfterClass(alwaysRun = true)
  	public void afterClass() {
  	  closeBrowserAndDriver("local");
- 	} 
+ 	} */
   
   	WebDriver driver;
   	AddEmployeePageObject addEmployeePage;
