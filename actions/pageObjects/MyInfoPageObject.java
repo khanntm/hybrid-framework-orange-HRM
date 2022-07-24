@@ -30,4 +30,10 @@ public class MyInfoPageObject extends BasePage {
 		waitForElementClickable(driver, MyInfoPageUI.TAB_LINK_AT_SIDEBAR, tabName);
 		clickToElement(driver, MyInfoPageUI.TAB_LINK_AT_SIDEBAR, tabName);
 	}
+
+	public void enterValueToCommentTextArea(WebDriver driver, String empContactComment) {
+		waitForElementVisible(driver, MyInfoPageUI.COMMENT_TEXT_AREA);
+		sendkeyToElement(driver, MyInfoPageUI.COMMENT_TEXT_AREA, empContactComment);
+		
+	}
 }

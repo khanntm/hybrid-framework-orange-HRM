@@ -69,6 +69,10 @@ public class DataUlti {
 		return faker.phoneNumber().cellPhone();
 	}
 	
+	public String getRandomText() {
+		return faker.random().toString();
+	}
+	
 	
 	
 

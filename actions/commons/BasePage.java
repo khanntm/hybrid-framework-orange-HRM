@@ -550,7 +550,7 @@ public class BasePage {
 		explicitWait.until(ExpectedConditions.elementToBeClickable(getByLocator(getDynamicXpath(locatorType, dynamicValues))));
 	}
 	
-	public void uploadImage(WebDriver driver, String filePath) {	 
+	public void uploadSingleFile(WebDriver driver, String filePath) {	 
 		getWebElement(driver, BasePageUI.UPLOAD_FILE).sendKeys(filePath);
 	}
 	
@@ -694,7 +694,7 @@ public class BasePage {
 	}
 	
 	public boolean isSuccessMessageDisplayed(WebDriver driver, String messageValue) {
-		waitForElementVisible(driver, BasePageUI.SUCCESS_MESSAGE_VALUE);
+		waitForElementVisible(driver, BasePageUI.SUCCESS_MESSAGE_VALUE, messageValue);
 		return isElementDisplayed(driver, BasePageUI.SUCCESS_MESSAGE_VALUE, messageValue);
 		
 	}

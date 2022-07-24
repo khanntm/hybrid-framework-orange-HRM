@@ -17,7 +17,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -31,11 +33,13 @@ import org.testng.annotations.AfterClass;
 public class Registration_And_Login extends BaseTest{
 	String employeeID, statusValue;
 	String empFirstName, empLastName, empUserName, empPassword, empFullName, editEmpFirstName, editEmpLastName;
-	String empContactAddressStreet1, empContactAddressStreet2, empContactCity, empContactProvince, empContactZipCode, empContactCountry, empContactHomeTelephone, empContactMobile, empContactWorkPhone, empContactWorkEmail, empContactOtherEmail;
+	String empContactAddressStreet1, empContactAddressStreet2, empContactCity, empContactProvince, empContactZipCode, empContactCountry, empContactHomeTelephone, empContactMobile, empContactWorkPhone, empContactWorkEmail, empContactOtherEmail, empContactComment, attachmentFileName;
 	String adminUserName, adminPassword;
 	
 	String uploadFilesPath = GlobalConstants.getGlobalConstants().getUploadFile();
 	String avatarFilePath = uploadFilesPath + "Avatar.jpg";
+	String attachmentFilePath = uploadFilesPath + "Live_Project_Account.txt";
+	
 	
 	@Parameters({"envName","serverName","browser", "ipAddress", "portNumber", "osName", "osVersion"})
 	 @BeforeClass 
@@ -70,9 +74,12 @@ public class Registration_And_Login extends BaseTest{
 		empContactWorkPhone = "983485848";
 		empContactWorkEmail = fakeData.getEmailAddress();
 		empContactOtherEmail = fakeData.getEmailAddress();
+		empContactComment = fakeData.getRandomText();
+		attachmentFileName = "Live_Project_Account.txt";
 		
 		log.info("Pre-Condition - Step 01: Login with Admin role");
-		dashboardPage = loginPage.loginToSystem(driver, adminUserName, adminPassword);
+		dashboardPage = loginPage.loginToSystem(driver, adminUserName, adminPassword);	
+			
 	 }
 
  @Test
@@ -152,14 +159,14 @@ public class Registration_And_Login extends BaseTest{
 	 myInfoPage.clickToChangePhotoImage();
 	 
 	 log.info("Upload_Avatar_02 - Step 05: Upload new avatar image");
-	 myInfoPage.uploadImage(driver, avatarFilePath);
+	 myInfoPage.uploadSingleFile(driver, avatarFilePath);
 	 
 	 log.info("Upload_Avatar_02 - Step 06: Click to 'Upload' button");
 	 myInfoPage.clickToButtonByID(driver, "btnSave");
 	 
 	 log.info("Upload_Avatar_02 - Step 07: Verify success message is displayed");
-	 verifyTrue(myInfoPage.isSuccessMessageDisplayed(driver, "Successfully Uploaded"));
-	 	 
+	 verifyTrue(myInfoPage.isSuccessMessageDisplayed(driver, "Successfully Uploaded"));	 
+	 
 	 log.info("Upload_Avatar_02 - Step 08: Verify new Avatar image is displayed");
 	 verifyTrue(myInfoPage.isNewAvatarImageDisplayed());
  }
@@ -296,12 +303,33 @@ public class Registration_And_Login extends BaseTest{
 	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_city"),empContactCity);
 	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_province"),empContactProvince);
 	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_emp_zipcode"),empContactZipCode);
-	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_country"),empContactCountry);
+	 verifyEquals(myInfoPage.getSelectedValueInDropDownByID(driver, "contact_country"),empContactCountry);
 	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_emp_hm_telephone"),empContactHomeTelephone);
 	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_emp_mobile"),empContactMobile);
 	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_emp_work_telephone"),empContactWorkPhone);
 	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_emp_work_email"),empContactWorkEmail);
 	 verifyEquals(myInfoPage.getTextboxValueByID(driver, "contact_emp_oth_email"),empContactOtherEmail);
+	 
+	 log.info("Contact_Details_04 - Step 18: Click on 'Add' button at 'Attachments' section");
+	 myInfoPage.clickToButtonByID(driver, "btnAddAttachment");
+	 	 
+	 log.info("Contact_Details_04 - Step 19: Select a attach file '"+ attachmentFilePath +"'");
+	 myInfoPage.uploadSingleFile(driver, attachmentFilePath);
+	 
+	 log.info("Contact_Details_04 - Step 20: Enter a valid info to 'Comment' textbox '" + empContactComment + "'");
+	 myInfoPage.enterValueToCommentTextArea(driver, empContactComment);
+	 
+	 log.info("Contact_Details_04 - Step 21: Click to 'Upload' button");
+	 myInfoPage.clickToButtonByID(driver, "btnSaveAttachment");
+	 
+	 log.info("Contact_Details_04 - Step 22: Verify success message after upload file");
+	 assertTrue(myInfoPage.isSuccessMessageDisplayed(driver, "Successfully Saved"));
+	 
+	 log.info("Contact_Details_04 - Step 23: Verify filename '" +attachmentFilePath+ "' correct after upload ");
+	 verifyEquals(myInfoPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "tblAttachments", "File Name", "1"), attachmentFileName);
+	 
+	 log.info("Contact_Details_04 - Step 24: Verify comment '" +empContactComment+ "' correct after upload ");
+	 verifyEquals(myInfoPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "tblAttachments", "Description", "1"), empContactComment);
 	 
  }
  
