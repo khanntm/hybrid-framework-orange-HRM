@@ -34,7 +34,7 @@ public class Registration_And_Login extends BaseTest{
 	String employeeID, statusValue;
 	String empFirstName, empLastName, empUserName, empPassword, empFullName, editEmpFirstName, editEmpLastName;
 	String empContactAddressStreet1, empContactAddressStreet2, empContactCity, empContactProvince, empContactZipCode, empContactCountry, empContactHomeTelephone, empContactMobile, empContactWorkPhone, empContactWorkEmail, empContactOtherEmail, empContactComment, attachmentFileName;
-	String empEmergencyContact, empEmergencyRelationship;
+	String empEmergencyContact, empEmergencyRelationship, relationshipValue, relationshipValueOutput;
 	String adminUserName, adminPassword;
 	
 	String uploadFilesPath = GlobalConstants.getGlobalConstants().getUploadFile();
@@ -80,6 +80,9 @@ public class Registration_And_Login extends BaseTest{
 		
 		empEmergencyContact  = fakeData.getFirstName();
 		empEmergencyRelationship = fakeData.getRelationship();
+		
+		relationshipValue = "Child";
+		relationshipValueOutput = "child";
 		
 		log.info("Pre-Condition - Step 01: Login with Admin role");
 		dashboardPage = loginPage.loginToSystem(driver, adminUserName, adminPassword);	
@@ -390,6 +393,42 @@ public class Registration_And_Login extends BaseTest{
  
  @Test
  public void Employee_06_Assigned_Dependents() {
+	 log.info("Assigned_Dependents_06 - Step 01: Click on 'Dependents' at side bar");
+	 myInfoPage.openTabAtSideBarByName("Dependents");
+	 
+	 log.info("Assigned_Dependents_06 - Step 02: Click on 'Add' button at 'Assigned Dependents' form");
+	 myInfoPage.clickToButtonByID(driver, "btnAddDependent");
+	 
+	 log.info("Assigned_Dependents_06 - Step 03: Enter to valid info into 'Name' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "dependent_name", empEmergencyContact);
+	 
+	 log.info("Assigned_Dependents_06 - Step 04: Select 'Relationship' dropdown value");
+	 myInfoPage.selectItemInDropDownByID(driver, "dependent_relationshipType", relationshipValue);
+	 
+	 log.info("Assigned_Dependents_06 - Step 05: Click 'Save' button");
+	 myInfoPage.clickToButtonByID(driver, "btnSaveDependent");
+	 
+	 log.info("Assigned_Dependents_06 - Step 06: Verify success message after adding 'Assigned Dependents'");
+	 verifyTrue(myInfoPage.isSuccessMessageDisplayed(driver, "Successfully Saved"));
+	 
+	 log.info("Assigned_Dependents_06 - Step 07: Verify 'Assigned Dependents' in datagrid");
+	 verifyEquals(myInfoPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "dependent_list", "Name", "1"), empEmergencyContact);
+	 verifyEquals(myInfoPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "dependent_list", "Relationship", "1"), relationshipValueOutput);
+	 
+	 log.info("Assigned_Dependents_06 - Step 08: Click on 'Add' button at 'Attachments' section");
+	 myInfoPage.clickToButtonByID(driver, "btnAddAttachment");
+	 	 
+	 log.info("Assigned_Dependents_06 - Step 09: Select a attach file '"+ attachmentFilePath +"'");
+	 myInfoPage.uploadSingleFile(driver, attachmentFilePath);
+	 
+	 log.info("Assigned_Dependents_06 - Step 11: Click to 'Upload' button");
+	 myInfoPage.clickToButtonByID(driver, "btnSaveAttachment");
+	 
+	 log.info("Assigned_Dependents_06 - Step 12: Verify success message after upload file");
+	 assertTrue(myInfoPage.isSuccessMessageDisplayed(driver, "Successfully Saved"));
+	 
+	 log.info("Assigned_Dependents_06 - Step 13: Verify filename '" +attachmentFilePath+ "' correct after upload ");
+	 verifyEquals(myInfoPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "tblAttachments", "File Name", "1"), attachmentFileName);
 	 
  }
  

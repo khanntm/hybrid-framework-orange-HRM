@@ -1,0 +1,59 @@
+DB
+host: localhost
+user: root
+pass: empty
+name: automationfc
+
+Role admin account
+automationfc/ automationfc
+
+url
+admin http://localhost/wp-admin
+user http://localhost/
+
+
+Role mode: 
+afc/ automationfc
+
+Editor: 
+selenium/ selenium
+
+
+<img alt="Employee Photo" src="/index.php/pim/viewPhoto/empNumber/67" id="empPic" width="200" height="200" border="0">
+<img alt="Employee Photo" src="/index.php/pim/viewPhoto/empNumber/65" id="empPic" width="133" height="200" border="0">
+
+
+//div[@class='inner']/div[@class='message success fadable']
+
+//div[@class='inner']/div[contains(text();'Successfully Uploaded')]
+
+0934526398DB
+host: localhost
+user: root
+pass: empty
+name: automationfc
+
+Role admin account
+automationfc/ automationfc
+
+url
+admin http://localhost/wp-admin
+user http://localhost/
+
+
+Role mode: 
+afc/ automationfc
+
+Editor: 
+selenium/ selenium
+
+
+<img alt="Employee Photo" src="/index.php/pim/viewPhoto/empNumber/67" id="empPic" width="200" height="200" border="0">
+<img alt="Employee Photo" src="/index.php/pim/viewPhoto/empNumber/65" id="empPic" width="133" height="200" border="0">
+
+
+//div[@class='inner']/div[@class='message success fadable']
+
+//div[@class='inner']/div[contains(text();'Successfully Uploaded')]
+
+0934526398
