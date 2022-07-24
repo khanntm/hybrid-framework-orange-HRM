@@ -65,13 +65,16 @@ public class DataUlti {
 	public String getZipCode() {
 		return faker.address().zipCode();
 	}
-	public String getPhoneNumber() {
-		return faker.phoneNumber().cellPhone();
-	}
 	
 	public String getRandomText() {
 		return faker.random().toString();
 	}
+	
+	public String getRelationship() {
+		return faker.relationships().inLaw();
+	}
+	
+	
 	
 	
 	

@@ -34,6 +34,7 @@ public class Registration_And_Login extends BaseTest{
 	String employeeID, statusValue;
 	String empFirstName, empLastName, empUserName, empPassword, empFullName, editEmpFirstName, editEmpLastName;
 	String empContactAddressStreet1, empContactAddressStreet2, empContactCity, empContactProvince, empContactZipCode, empContactCountry, empContactHomeTelephone, empContactMobile, empContactWorkPhone, empContactWorkEmail, empContactOtherEmail, empContactComment, attachmentFileName;
+	String empEmergencyContact, empEmergencyRelationship;
 	String adminUserName, adminPassword;
 	
 	String uploadFilesPath = GlobalConstants.getGlobalConstants().getUploadFile();
@@ -76,6 +77,9 @@ public class Registration_And_Login extends BaseTest{
 		empContactOtherEmail = fakeData.getEmailAddress();
 		empContactComment = fakeData.getRandomText();
 		attachmentFileName = "Live_Project_Account.txt";
+		
+		empEmergencyContact  = fakeData.getFirstName();
+		empEmergencyRelationship = fakeData.getRelationship();
 		
 		log.info("Pre-Condition - Step 01: Login with Admin role");
 		dashboardPage = loginPage.loginToSystem(driver, adminUserName, adminPassword);	
@@ -336,6 +340,52 @@ public class Registration_And_Login extends BaseTest{
  @Test
  public void Employee_05_Emergency_Details() {
 	 
+	 log.info("Emergency_Details_05 - Step 00: Click on 'Emergency Contacts' at side bar");
+	 myInfoPage.openTabAtSideBarByName("Emergency Contacts");
+	 
+	 log.info("Emergency_Details_05 - Step 01: Click on 'Save' button");
+	 myInfoPage.clickToButtonByID(driver, "btnAddContact");
+	 
+	 log.info("Emergency_Details_05 - Step 02: Enter to valid info into 'Name' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "emgcontacts_name", empEmergencyContact);
+	 
+	 log.info("Emergency_Details_05 - Step 03: Enter to valid info into 'Relationship' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "emgcontacts_relationship", empEmergencyRelationship);
+	 
+	 log.info("Emergency_Details_05 - Step 04: Enter to valid info into 'Home Telephone' textbox");
+	 myInfoPage.enterToTextboxByID(driver, "emgcontacts_homePhone", empContactHomeTelephone);
+	 
+	 log.info("Emergency_Details_05 - Step 05: Click 'Save' button");
+	 myInfoPage.clickToButtonByID(driver, "btnSaveEContact");
+	 
+	 log.info("Emergency_Details_05 - Step 06: Verify success message after add 'Emergency Contact'");
+	 verifyTrue(myInfoPage.isSuccessMessageDisplayed(driver, "Successfully Saved"));
+	 
+	 log.info("Emergency_Details_05 - Step 07: Verify 'Assigned Emergency Contacts' in datagrid");
+	 verifyEquals(myInfoPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "emgcontact_list", "Name", "1"), empEmergencyContact);
+	 verifyEquals(myInfoPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "emgcontact_list", "Relationship", "1"), empEmergencyRelationship);
+	 verifyEquals(myInfoPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "emgcontact_list", "Home Telephone", "1"), empContactHomeTelephone);
+	 
+	 log.info("Emergency_Details_05 - Step 08: Click on 'Add' button at 'Attachments' section");
+	 myInfoPage.clickToButtonByID(driver, "btnAddAttachment");
+	 	 
+	 log.info("Emergency_Details_05 - Step 09: Select a attach file '"+ attachmentFilePath +"'");
+	 myInfoPage.uploadSingleFile(driver, attachmentFilePath);
+	 
+	 log.info("Emergency_Details_05 - Step 10: Enter a valid info to 'Comment' textbox '" + empContactComment + "'");
+	 myInfoPage.enterValueToCommentTextArea(driver, empContactComment);
+	 
+	 log.info("Emergency_Details_05 - Step 11: Click to 'Upload' button");
+	 myInfoPage.clickToButtonByID(driver, "btnSaveAttachment");
+	 
+	 log.info("Emergency_Details_05 - Step 12: Verify success message after upload file");
+	 assertTrue(myInfoPage.isSuccessMessageDisplayed(driver, "Successfully Saved"));
+	 
+	 log.info("Emergency_Details_05 - Step 13: Verify filename '" +attachmentFilePath+ "' correct after upload ");
+	 verifyEquals(myInfoPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "tblAttachments", "File Name", "1"), attachmentFileName);
+	 
+	 log.info("Emergency_Details_05 - Step 14: Verify comment '" +empContactComment+ "' correct after upload ");
+	 verifyEquals(myInfoPage.getValueInTableIDAtColumnNameAndRowIndex(driver, "tblAttachments", "Description", "1"), empContactComment);
  }
  
  @Test
