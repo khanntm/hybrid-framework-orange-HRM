@@ -1,4 +1,5 @@
-# hybrid-framework-orange-HRM apply:
+# hybrid-framework-orange-HRM: 
+Live coding project on Orange HRM site apply
 - Page Object Modal
 - Pattern Object
 - Singleton
